@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,24 +53,15 @@ fun DeviceScreen(
             .fillMaxSize()
             .background(Color(0xFFF2F7FA))
     ) {
-        Box(
-            modifier = Modifier.weight(1f)
-        ) {
-            BluetoothDeviceList(
-                pairedDevices = state.pairedDevices,
-                scannedDevices = state.scannedDevices,
-                onClick = onDeviceClick,
-                modifier = Modifier.fillMaxSize()
-            )
-            if (state.isScanning) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = MaterialTheme.colors.primary)
-                }
-            }
-        }
+        BluetoothDeviceList(
+            pairedDevices = state.pairedDevices,
+            scannedDevices = state.scannedDevices,
+            isScanning = state.isScanning,
+            onClick = onDeviceClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        )
 
         Column(
             modifier = Modifier
@@ -123,6 +117,7 @@ fun DeviceScreen(
 fun BluetoothDeviceList(
     pairedDevices: List<BluetoothDevice>,
     scannedDevices: List<BluetoothDevice>,
+    isScanning: Boolean,
     onClick: (BluetoothDevice) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -170,12 +165,24 @@ fun BluetoothDeviceList(
 
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Available Devices",
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = MaterialTheme.colors.primary
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Available Devices",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp,
+                    color = MaterialTheme.colors.primary
+                )
+                if (isScanning) {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(24.dp),
+                        color = MaterialTheme.colors.primary,
+                        strokeWidth = 2.dp
+                    )
+                }
+            }
         }
         if (scannedDevices.isEmpty()) {
              item {
