@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.plcoding.bluetoothchat.domain.chat.BluetoothMessage
 import com.plcoding.bluetoothchat.ui.theme.BluetoothChatTheme
-import com.plcoding.bluetoothchat.ui.theme.OldRose
-import com.plcoding.bluetoothchat.ui.theme.Vanilla
+import com.plcoding.bluetoothchat.ui.theme.ReceivedMessage
+import com.plcoding.bluetoothchat.ui.theme.SentMessage
 
 @Composable
 fun ChatMessage(
@@ -34,7 +34,7 @@ fun ChatMessage(
                 )
             )
             .background(
-                if (message.isFromLocalUser) OldRose else Vanilla
+                if (message.isFromLocalUser) SentMessage else ReceivedMessage
             )
             .padding(16.dp)
     ) {

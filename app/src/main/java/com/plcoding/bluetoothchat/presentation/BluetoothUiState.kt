@@ -4,6 +4,7 @@ import com.plcoding.bluetoothchat.domain.chat.BluetoothDevice
 import com.plcoding.bluetoothchat.domain.chat.BluetoothMessage
 
 data class BluetoothUiState(
+    val isScanning: Boolean = false,
     val scannedDevices: List<BluetoothDevice> = emptyList(),
     val pairedDevices: List<BluetoothDevice> = emptyList(),
     val isConnected: Boolean = false,
