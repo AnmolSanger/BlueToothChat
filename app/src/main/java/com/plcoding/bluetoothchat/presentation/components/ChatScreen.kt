@@ -60,7 +60,7 @@ fun ChatScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.2f))
+                    .background(Color.Black.copy(alpha = 0.4f)) // Made header darker
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -104,8 +104,8 @@ fun ChatScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.2f))
-                    .padding(16.dp),
+                    .background(Color.Black.copy(alpha = 0.4f)) // Made input darker
+                    .padding(horizontal = 16.dp, vertical = 8.dp), // Reduced vertical padding
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextField(

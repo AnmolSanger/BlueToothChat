@@ -9,13 +9,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.plcoding.bluetoothchat.domain.chat.BluetoothMessage
 import com.plcoding.bluetoothchat.ui.theme.BluetoothChatTheme
-import com.plcoding.bluetoothchat.ui.theme.ReceivedMessage
 import com.plcoding.bluetoothchat.ui.theme.SentMessage
 
 @Composable
@@ -23,6 +25,11 @@ fun ChatMessage(
     message: BluetoothMessage,
     modifier: Modifier = Modifier
 ) {
+    val blueGradient = Brush.horizontalGradient(
+        colors = listOf(Color(0xFF0288F1), Color(0xFF4FC3F7))
+    )
+    val sentBrush = SolidColor(SentMessage)
+
     Column(
         modifier = modifier
             .clip(
@@ -34,18 +41,25 @@ fun ChatMessage(
                 )
             )
             .background(
-                if (message.isFromLocalUser) SentMessage else ReceivedMessage
+                brush = if (message.isFromLocalUser) {
+                    sentBrush
+                } else {
+                    blueGradient
+                }
             )
             .padding(16.dp)
     ) {
-        Text(
-            text = message.senderName,
-            fontSize = 10.sp,
-            color = Color.Black
-        )
+        if(!message.isFromLocalUser) {
+            Text(
+                text = message.senderName,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFFFF9800) // Orange
+            )
+        }
         Text(
             text = message.message,
-            color = Color.Black,
+            color = if (message.isFromLocalUser) Color.Black else Color.White,
             modifier = Modifier.widthIn(max = 250.dp)
         )
     }
