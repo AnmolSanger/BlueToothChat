@@ -2,12 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <!-- Permissions for Android 12 and higher -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
-        android:usesPermissionFlags="neverForLocation" />
+    <!--
+    REMOVED "neverForLocation" flag to resolve scanning conflict.
+    This is the key fix.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
-    <uses-feature android:name="android.hardware.bluetooth" />
+    <!--
+    Permissions for older versions (Android 11 and below).
+    These are REQUIRED for scanning to work on those devices.
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+    <!-- Declares that the app requires Bluetooth hardware -->
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
 
     <application
         android:name=".BluetoothApp"
@@ -26,7 +40,6 @@
             android:theme="@style/Theme.BluetoothChat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
